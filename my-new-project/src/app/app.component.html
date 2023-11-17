@@ -1,0 +1,15 @@
+Hello World Angular
+My title is {{title}}
+<br>
+My ninja name is {{ninjaName}}
+<br>
+<button type="button" (click)="ninjaConsole()">Console Ninja</button>
+<button type="button" (click)="changeNinjaName('Sakura')">Change ninja to Sakura</button>
+<button type="button" (click)="changeNinjaName('Naruto')">Change ninja to Naruto</button>
+<br>
+<span>มา 4 คนจ่าย 3 คน</span>
+<div>
+  <input #priceBuffetInput type="text" placeholder="ราคาทั้งหมด">
+  <button (click)="calBuffet(priceBuffetInput.value)">คำนวน</button>
+</div>
+<span>จ่ายคนละ {{price}} บาท</span>
