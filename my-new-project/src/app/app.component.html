@@ -14,4 +14,7 @@ My ninja name is {{ninjaName}}
 </div>
 <span>จ่ายคนละ {{price}} บาท</span>
 <br>
-<app-action-bar/>
+<app-action-bar (numberChange)="testClick()"/>
+<app-action-bar (numberChange)="testClick()" [step]="10" />
+<br>
+<button type="button" (click)="testClick()">testEventBinding</button>

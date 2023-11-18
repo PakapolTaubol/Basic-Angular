@@ -26,4 +26,7 @@ export class AppComponent {
     const numPrice = Number(price);
     this.price = (numPrice * 3) / 4
   }
+  testClick() {
+    console.log('hi');
+  }
 }
