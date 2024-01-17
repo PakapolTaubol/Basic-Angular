@@ -16,8 +16,9 @@ export class AppComponent {
 
   price = 0;
 
-  ninjaConsole() {
-    console.log(`Ninja is ${this.ninjaName}`)
+  ninjaShow() {
+    // console.log(`Ninja is ${this.ninjaName}`)
+    alert(`${this.ninjaName}`)
   }
   changeNinjaName(name: string) {
     this.ninjaName = name;
