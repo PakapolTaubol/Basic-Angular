@@ -8,10 +8,10 @@
       <input #input_search type="text" placeholder="Search Pokemon...">
       <button type="button" (click)="searchOn(input_search.value)" (click)="filterPokemon(input_search.value)">Search</button>
     </div>
-    <p>results of "{{ input_text}}"</p>
+    <p>results of "{{ inputText}}"</p>
 
     <div id="pokemon-list">
-      <div *ngFor="let pokemon of pokemon_filtered;">
+      <div *ngFor="let pokemon of pokemonFiltered;">
         <img [src]="pokemon.sprites['front_default']">
         <p>Name: <span style="color: blue;">{{pokemon.name}}</span></p>
         <p>Type: <span *ngFor="let types of pokemon.types">{{types.type.name}} </span></p>

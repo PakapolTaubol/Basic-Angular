@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
@@ -11,16 +11,16 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'pokemon-search';
-  input_text: string = '';
-  pokemon_list: any[] = [];
-  pokemon_filtered: any[] = [];
+  inputText: string = '';
+  pokemonList: any[] = [];
+  pokemonFiltered: any[] = [];
 
-  searchOn(text: string) {
-    text ? this.input_text = text : this.input_text = ''
+  searchOn(text: string): void {
+    text ? this.inputText = text : this.inputText = ''
   }
 
-  fetchPokemonData() {
-    const promises: Promise<any>[] = [];
+  fetchPokemonData(): void {
+    const promises: Promise<object>[] = [];
     for (let i = 1; i <= 150; i++) {
       const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
       promises.push(fetch(url).then((res) => res.json()));
@@ -28,20 +28,20 @@ export class AppComponent implements OnInit {
 
     Promise.all(promises)
       .then((pokemonData) => {
-        this.pokemon_list = pokemonData;
-        this.pokemon_filtered = this.pokemon_list;
+        this.pokemonList = pokemonData;
+        this.pokemonFiltered = this.pokemonList;
       })
       .catch((error) => {
         console.error('Error fetching Pokemon data:', error);
       });
   }
 
-  filterPokemon(text: string) {
+  filterPokemon(text: string): void {
     if (!text) {
-      return this.pokemon_filtered = this.pokemon_list;
+      this.pokemonFiltered = this.pokemonList;
     }
     const lowercaseText = text.toLowerCase();
-    return this.pokemon_filtered = this.pokemon_list.filter(pokemon => pokemon.name.toLowerCase().includes(lowercaseText));
+    this.pokemonFiltered = this.pokemonList.filter(pokemon => pokemon.name.toLowerCase().includes(lowercaseText));
   }
 
   ngOnInit(): void {
