@@ -1,12 +1,12 @@
-<main>
-  <div>
+<main id="main">
+  <div id="content  -center">
     <div>
       <h1>PokeSearch</h1>
       <p>Look for the Pokémon you're interested.</p>
     </div>
     <div id="inputbar">
       <input #input_search type="text" placeholder="Search Pokemon...">
-      <button type="button" (click)="searchOn(input_search.value)" (click)="filterPokemon(input_search.value)">Search</button>
+      <button type="button" (click)="searchOn(input_search.value)">Search</button>
     </div>
     <p>results of "{{ inputText}}"</p>
 
