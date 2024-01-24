@@ -1,20 +1,27 @@
 <main id="main">
-  <div id="content  -center">
-    <div>
-      <h1>PokeSearch</h1>
-      <p>Look for the Pokémon you're interested.</p>
+  <div id="content-center" class="p-3">
+    <div class="text-center">
+      <p class=" font-bold text-4xl m-0">PokeSearch</p>
+      <p class="m-2">Look for the Pokémon you're interested.</p>
     </div>
-    <div id="inputbar">
-      <input #input_search type="text" placeholder="Search Pokemon...">
-      <button type="button" (click)="searchOn(input_search.value)">Search</button>
+    <div id="inputbar" class="flex justify-content-center text-center">
+      <div>
+        <div class="flex gap-1">
+          <span class="p-input-icon-left">
+            <input #input_search type="text" pInputText placeholder="Search Pokemon...">
+          </span>
+          <p-button type="button" (click)="searchOn(input_search.value)">Search</p-button>
+        </div>
+        <p class="text-left">results of "{{ inputText}}"</p>
+      </div>
     </div>
-    <p>results of "{{ inputText}}"</p>
-
-    <div id="pokemon-list">
-      <div *ngFor="let pokemon of pokemonFiltered;">
-        <img [src]="pokemon.sprites['front_default']">
-        <p>Name: <span style="color: blue;">{{pokemon.name}}</span></p>
-        <p>Type: <span *ngFor="let types of pokemon.types">{{types.type.name}} </span></p>
+    <div id="pokemon-list" class="grid p-2">
+      <div class="col-2" *ngFor="let pokemon of pokemonFiltered;">
+        <div class="flex justify-content-center">
+          <img [src]="pokemon.sprites['front_default']">
+        </div>
+        <p class="text-center">Name: <span class=" text-blue-700 font-bold">{{pokemon.name}}</span></p>
+        <p class="text-center">Type: <span *ngFor="let types of pokemon.types">{{types.type.name}} </span></p>
       </div>
     </div>
   </div>
