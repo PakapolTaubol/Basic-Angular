@@ -12,8 +12,7 @@ export class AppComponent implements OnInit {
   pokemonList: any[] = [];
   pokemonFiltered: any[] = [];
 
-  constructor(private pokemonService: PokemonService) {
-  }
+  constructor(private pokemonService: PokemonService) {}
 
   fetchPokemon(): void {
     this.pokemonService.fetchPokemonData().subscribe((pokemonData) => {
