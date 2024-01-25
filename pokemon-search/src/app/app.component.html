@@ -1,21 +1,9 @@
-<main>
-  <div>
-    <div>
-      <h1>PokeSearch</h1>
-      <p>Look for the Pokémon you're interested.</p>
-    </div>
-    <div id="inputbar">
-      <input #input_search type="text" placeholder="Search Pokemon...">
-      <button type="button" (click)="searchOn(input_search.value)" (click)="filterPokemon(input_search.value)">Search</button>
-    </div>
-    <p>results of "{{ inputText}}"</p>
-
-    <div id="pokemon-list">
-      <div *ngFor="let pokemon of pokemonFiltered;">
-        <img [src]="pokemon.sprites['front_default']">
-        <p>Name: <span style="color: blue;">{{pokemon.name}}</span></p>
-        <p>Type: <span *ngFor="let types of pokemon.types">{{types.type.name}} </span></p>
-      </div>
+<main id="main">
+  <div id="contenr-top" class="">
+    <div class="text-center">
+      <p class=" font-bold text-4xl m-0">PokeSearch</p>
+      <p class="m-2">Look for the Pokémon you're interested.</p>
     </div>
   </div>
+  <app-pokemon-search [pokemonList]="pokemonList" [pokemonFiltered]="pokemonFiltered"></app-pokemon-search>
 </main>
