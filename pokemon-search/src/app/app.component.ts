@@ -7,11 +7,8 @@ import {PokemonService} from './pokemon.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'pokemon-search';
-  inputText: string = '';
   pokemonList: any[] = [];
   pokemonFiltered: any[] = [];
-
   constructor(private pokemonService: PokemonService) {}
 
   fetchPokemon(): void {
@@ -19,12 +16,6 @@ export class AppComponent implements OnInit {
       this.pokemonList = pokemonData;
       this.pokemonFiltered = this.pokemonList;
     })
-  }
-
-  searchOn(text: string): void {
-    text ? this.inputText = text : this.inputText = ''
-    const lowercaseText = text.toLowerCase();
-    text ? this.pokemonFiltered = this.pokemonList.filter(pokemon => pokemon.name.toLowerCase().includes(lowercaseText)) : this.pokemonFiltered = this.pokemonList;
   }
 
   ngOnInit(): void {

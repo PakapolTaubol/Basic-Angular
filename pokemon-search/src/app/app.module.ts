@@ -8,10 +8,16 @@ import { InputTextModule } from "primeng/inputtext";
 import { ButtonModule } from "primeng/button";
 import { PaginatorModule } from "primeng/paginator";
 import { BrowserModule } from "@angular/platform-browser";
+import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
+import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
+import { PokemonSearchComponent } from './pokemon-search/pokemon-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PokemonCardComponent,
+    PokemonListComponent,
+    PokemonSearchComponent,
   ],
   imports: [
     CommonModule,
