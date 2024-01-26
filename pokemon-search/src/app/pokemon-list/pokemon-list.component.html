@@ -1,6 +1,6 @@
-<div id="content-center" class="pt-4">
-    <div id="pokemon-list" class="grid gap-3 flex justify-content-center pt-2">
-        <div class="col-2 border-1 border-round border-bluegray-100 p-0 h-16rem w-18rem shadow-2"
+<div id="content-center" class="pt-4 flex justify-content-center">
+    <div id="pokemon-list" class="grid gap-3 w-11">
+        <div class="col-2 border-1 border-round border-bluegray-100 p-0 h-16rem w-16rem shadow-2 hover:bg-blue-50"
             *ngFor="let pokemon of pokemonFiltered;">
             <div class="flex justify-content-center">
                 <img [src]="pokemon.sprites['front_default']">
