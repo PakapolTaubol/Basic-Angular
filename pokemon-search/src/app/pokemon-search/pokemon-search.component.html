@@ -1,12 +1,20 @@
-<div id="seach-bar" class="flex justify-content-center text-center">
-    <div>
-        <div class="flex gap-1">
-            <span class="p-input-icon-left">
-                <input pInputText [(ngModel)]="input" (keyup)="onSearch()" type="text" placeholder="Search Pokemon...">
-            </span>
-            <p-button type="button" label="Search"></p-button>
+<div id="nav-bar" class="bg-white shadow-2 py-3">
+    <div id="contenr-top">
+        <div class="text-center">
+            <p class="font-bold text-4xl m-0">PokeSearch</p>
+            <p class="m-1 font-ligth text-sm">Look for the Pokémon you're interested.</p>
         </div>
-        <p class="text-left">results of "{{ input }}"</p>
+    </div>
+    <div id="seach-bar" class="flex justify-content-center text-center">
+        <div>
+            <div class="flex gap-1">
+                <span class="p-input-icon-left">
+                    <input pInputText [(ngModel)]="input" (keyup)="onSearch()" type="text"
+                        placeholder="Search Pokemon...">
+                </span>
+                <p-button type="button" label="Search"></p-button>
+            </div>
+        </div>
     </div>
 </div>
 <app-pokemon-list [pokemonFiltered]="pokemonFiltered"></app-pokemon-list>

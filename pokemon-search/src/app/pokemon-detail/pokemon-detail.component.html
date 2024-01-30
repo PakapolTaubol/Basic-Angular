@@ -1,0 +1,23 @@
+<div class="w-full h-screen bg-bluegray-400 py-4 px-8">
+    <div class="details border-bluegray-100">
+        <div>
+            <span class="font-bold">{{ pokemon?.name}}</span>
+            <span class="text-bluegray-700"> #{{ pokemon?.id}}</span>
+        </div>
+        <div class="center">
+            <img class="img-big" [src]="pokemon?.img">
+        </div>
+        <div class="w-full h-full flex">
+            <div class="w-full">
+                <p>Type: <span>{{pokemon?.types}}</span></p>
+                <p>Weight: <span>{{pokemon?.weight}}</span></p>
+                <p>Weight: <span>{{pokemon?.weight}}</span></p>
+            </div>
+            <div class="w-full">
+                <p>Type: <span>{{pokemon?.types}}</span></p>
+                <p>Weight: <span>{{pokemon?.weight}}</span></p> 
+                <p>Weight: <span>{{pokemon?.weight}}</span></p> 
+            </div>
+        </div>
+    </div>
+</div>
