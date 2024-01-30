@@ -1,0 +1,18 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.details {
+  font-size: 2rem;
+  text-align: center;
+  background-color: white;
+  border: 1px solid;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  padding: 3rem;
+}
+.img-big {
+  background-size: cover;
+  width: 160px;
+  height: 160px;
+}

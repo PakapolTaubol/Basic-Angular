@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { PokemonService } from '../pokemon.service';
+import { formatPokemonId, formatName } from '../utils/functions';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,10 +9,9 @@ import { Router } from '@angular/router';
 })
 export class PokemonListComponent {
   constructor(private router: Router) { }
-  inputText: string = '';
   @Input() pokemonFiltered: any[] = [];
 
   onClickDetail(id: number): void {
-    this.router.navigateByUrl(`/detail/${id}`)
+    this.router.navigate(['/detail'], { queryParams: { id: id } })
   }
 }

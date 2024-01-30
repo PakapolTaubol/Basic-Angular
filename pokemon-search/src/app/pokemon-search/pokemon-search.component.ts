@@ -1,14 +1,17 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { PokemonService } from '../pokemon.service';
 
 @Component({
   selector: 'app-pokemon-search',
   templateUrl: './pokemon-search.component.html',
   styleUrl: './pokemon-search.component.css'
 })
-export class PokemonSearchComponent {
+export class PokemonSearchComponent implements OnInit {
+  pokemonList: any[] = [];
+  pokemonFiltered: any[] = [];
   input: string = '';
-  @Input() pokemonList: any[] = [];
-  @Input() pokemonFiltered: any[] = [];
+
+  constructor(private pokemonService: PokemonService) { }
 
   onSearch(): void {
     this.filterPokemon(this.input);
@@ -25,5 +28,16 @@ export class PokemonSearchComponent {
     } else {
       this.pokemonFiltered = pList
     }
+  }
+
+  fetchPokemon(): void {
+    this.pokemonService.fetchPokemonData().subscribe((pokemonData) => {
+      this.pokemonList = pokemonData;
+      this.pokemonFiltered = this.pokemonList;
+    })
+  }
+
+  ngOnInit(): void {
+    this.fetchPokemon();
   }
 }

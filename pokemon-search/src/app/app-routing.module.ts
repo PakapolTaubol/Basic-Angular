@@ -1,24 +1,29 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { PokemonDetailComponent } from './pokemon-detail/pokemon-detail.component';
+import { PokemonSearchComponent } from './pokemon-search/pokemon-search.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AppComponent,
+    component: PokemonSearchComponent,
   },
   {
-    path: 'detail/:id',
+    path: 'detail',
     component: PokemonDetailComponent,
-  }
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
+  },
 ];
 
 
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forChild(routes),
+    RouterModule.forRoot(routes),
   ],
   exports: [
     RouterModule

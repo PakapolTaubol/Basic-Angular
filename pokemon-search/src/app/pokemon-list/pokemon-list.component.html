@@ -9,14 +9,15 @@
                 <div>
                     <span class="bg-bluegray-400 border-round p-1">
                         <span class="text-white font-bold">
-                            ID: {{pokemon.id}}
+                            # {{pokemon.id}}
                         </span>
                     </span>
                     <span class=" text-bluegray-700 font-bold text-xl pl-2">{{pokemon.name}}</span>
                 </div>
                 <p>Type: <span *ngFor="let types of pokemon.types">{{types.type.name}} </span></p>
                 <div>
-                    <p-button label="Details" [text]="true" [raised]="true" severity="info" size="small" (click)="onClickDetail(pokemon.id)"></p-button>
+                    <p-button label="Details" [text]="true" [raised]="true" severity="info" size="small"
+                        (click)="onClickDetail(pokemon.id)"></p-button>
                 </div>
             </div>
         </div>
