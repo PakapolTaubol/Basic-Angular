@@ -1,0 +1,13 @@
+<p>limit-offset works!</p>
+<div class="flex flex-column">
+    <div class="flex align-items-center">
+        <p-button (click)="store.decLimit(10)" class="m-2" label="-" size="small"></p-button>
+        <span>Limit: {{store.limit$ | async}}</span>
+        <p-button (click)="store.incLimit(10)" class="m-2" label="+" size="small"></p-button>
+    </div>
+    <div class="flex align-items-center">
+        <p-button (click)="store.decOffset(10)" class="m-2" label="-" size="small"></p-button>
+        <span>Offset: {{store.offset$ | async}}</span>
+        <p-button (click)="store.incOffset(10)" class="m-2" label="+" size="small"></p-button>
+    </div>
+</div>
