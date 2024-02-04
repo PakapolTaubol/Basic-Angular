@@ -35,6 +35,8 @@ export class PokemonSearchComponent implements OnInit {
       this.pokemonList = pokemonData;
       this.pokemonFiltered = this.pokemonList;
     })
+    console.log(this.pokemonFiltered);
+    
   }
 
   ngOnInit(): void {

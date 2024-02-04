@@ -3,14 +3,6 @@ import { PokemonService } from '../pokemon.service';
 import { ActivatedRoute } from '@angular/router';
 import { formatPokemonId, formatName } from '../utils/functions';
 
-interface Pokemon {
-  id: string;
-  name: string;
-  img: string;
-  types: string[];
-  weight: number;
-}
-
 @Component({
   selector: 'app-pokemon-detail',
   templateUrl: './pokemon-detail.component.html',
@@ -21,7 +13,7 @@ export class PokemonDetailComponent implements OnInit {
   constructor(private pokemonService: PokemonService, private activatedRoute: ActivatedRoute) {
   }
 
-  pokemon: Pokemon | null = null;
+  pokemon: any;
 
   getPokemonById(): void {
     const id = this.activatedRoute.snapshot.queryParams['id'];
@@ -32,6 +24,9 @@ export class PokemonDetailComponent implements OnInit {
         img: data.sprites['front_default'],
         types: data.types.map((types: any) => formatName(types.type.name)),
         weight: data.weight,
+        base_experience: data.base_experience,
+        ability: formatName(data.abilities[0].ability.name),
+        hidden_ability: formatName(data.abilities[1].ability.name),
       }
     });
   }

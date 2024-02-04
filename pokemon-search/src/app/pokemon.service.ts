@@ -1,28 +1,22 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable } from "rxjs";
+import { forkJoin, from, map, Observable, range } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
 })
 export class PokemonService {
-  constructor(private httClient: HttpClient) { }
+  constructor(private http: HttpClient) { }
   fetchPokemonData(): Observable<any> {
-    const obj = []
+    const pokemons = []
     for (let i = 1; i <= 50; i++) {
       const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-      obj.push(this.httClient.get(url))
+      pokemons.push(this.http.get(url))
     }
-    return forkJoin(obj);
+    return forkJoin(pokemons);
   }
+  
   fetchPokemonById(id: number): Observable<any> {
-    const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-    return this.httClient.get(url);
+    return this.http.get<any>(`https://pokeapi.co/api/v2/pokemon/${id}`);
   }
-  // fetchPokemonTarget(id: number): Observable<any> {
-  //   const obj = []
-  //   const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-  //   obj.push(this.httClient.get(url))
-  //   return forkJoin(obj);
-  // }
 }

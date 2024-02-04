@@ -1,23 +1,26 @@
-<div class="w-full h-screen bg-bluegray-400 py-4 px-8">
+<div class="w-full h-screen bg-bluegray-200 py-4 px-8">
     <div class="details border-bluegray-100">
-        <div>
+        <div class="text-center">
             <span class="font-bold">{{ pokemon?.name}}</span>
             <span class="text-bluegray-700"> #{{ pokemon?.id}}</span>
         </div>
         <div class="center">
             <img class="img-big" [src]="pokemon?.img">
         </div>
-        <div class="w-full h-full flex">
-            <div class="w-full">
+        <div class="w-full h-full flex flex-row justify-content-evenly  flex-wrap">
+            <div class="flex flex-column">
                 <p>Type: <span>{{pokemon?.types}}</span></p>
                 <p>Weight: <span>{{pokemon?.weight}}</span></p>
-                <p>Weight: <span>{{pokemon?.weight}}</span></p>
+                <p>Base EXP: <span>{{pokemon?.base_experience}}</span></p>
             </div>
-            <div class="w-full">
-                <p>Type: <span>{{pokemon?.types}}</span></p>
-                <p>Weight: <span>{{pokemon?.weight}}</span></p> 
-                <p>Weight: <span>{{pokemon?.weight}}</span></p> 
+            <div class="flex flex-column">
+                <p>Ability: <span>{{pokemon?.ability}}</span></p>
+                <p>Hidden: <span>{{pokemon?.hidden_ability}}</span></p>
             </div>
+        </div>
+        <div class="w-full h-full flex justify-content-evenly">
+            <p-button label={{pokemon?.name}}></p-button>
+            <p-button label={{pokemon?.name}}></p-button>
         </div>
     </div>
 </div>
