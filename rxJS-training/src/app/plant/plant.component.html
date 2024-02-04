@@ -1,0 +1,12 @@
+<div id="main">
+    <div class="flex justify-content-center">
+        <div class="flex flex-column align-items-center">
+            <p class="font-bold text-xl">Your plant is works!</p>
+            <img #plantImage src="assets/img/plant.png" alt="">
+            <div id="button" class="flex flex-row flex-wrap">
+                <p-button (click)="promiseBtn()" class="m-1" label="Promise"></p-button>
+                <p-button (click)="observableBtn()" class="m-1" label="Observable"></p-button>
+            </div>
+        </div>
+    </div>
+</div>
