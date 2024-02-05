@@ -18,7 +18,7 @@
                 <p>Hidden: <span>{{pokemon?.hidden_ability}}</span></p>
             </div>
         </div>
-        <div class="w-full h-full flex justify-content-evenly">
+        <div class="w-full h-full flex justify-content-evenly pt-6">
             <p-button [disabled]="pokemon?.id === '0001'" (click)="onClickDetail(prevPokemon.id)"
                 label={{prevPokemon?.name}}></p-button>
             <p-button *ngIf="nextPokemon?.id" (click)="onClickDetail(nextPokemon.id)"

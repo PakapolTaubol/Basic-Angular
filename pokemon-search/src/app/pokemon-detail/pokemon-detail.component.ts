@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { PokemonService } from '../pokemon.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { formatPokemonId, formatName } from '../utils/functions';
@@ -19,17 +19,17 @@ export class PokemonDetailComponent implements OnInit {
   id: number = 0;
 
   ngOnInit(): void {
-    this.id = Number(this.activatedRoute.snapshot.queryParams['id']); // Ensure id is a number
-    this.fetchPokemonData();
+    this.id = Number(this.activatedRoute.snapshot.queryParams['id']);
+    this.fetchPokemonData(this.id);
   }
 
-  fetchPokemonData(): void {
+  fetchPokemonData(id: number): void {
     const pokemonRequests = [
-      this.pokemonService.fetchPokemonById(this.id),
-      this.pokemonService.fetchPokemonById(this.id > 1 ? this.id - 1 : 1).pipe(
+      this.pokemonService.fetchPokemonById(id),
+      this.pokemonService.fetchPokemonById(id > 1 ? id - 1 : 1).pipe(
         catchError(() => of(null))
       ),
-      this.pokemonService.fetchPokemonById(this.id + 1).pipe(
+      this.pokemonService.fetchPokemonById(id > 0 ? id + 1 : 1).pipe(
         catchError(() => of(null))
       )
     ];
@@ -43,7 +43,7 @@ export class PokemonDetailComponent implements OnInit {
         weight: data.weight,
         base_experience: data.base_experience,
         ability: formatName(data.abilities[0].ability.name),
-        hidden_ability: formatName(data.abilities[1].ability.name),
+        hidden_ability: data.abilities[1] ? formatName(data.abilities[1].ability.name) : '-',
       };
 
       this.prevPokemon = prevData ? {
@@ -61,5 +61,6 @@ export class PokemonDetailComponent implements OnInit {
   }
   onClickDetail(id: number): void {
     this.router.navigate(['/detail'], { queryParams: { id: id } })
+    this.fetchPokemonData(id)
   }
 }

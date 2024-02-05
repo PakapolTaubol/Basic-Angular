@@ -12,7 +12,7 @@
                     <input pInputText [(ngModel)]="input" (keyup)="onSearch()" type="text"
                         placeholder="Search Pokemon...">
                 </span>
-                <p-button type="button" label="Search"></p-button>
+                <p-button (click)="onSearch()" type="button" label="Search"></p-button>
             </div>
         </div>
     </div>
