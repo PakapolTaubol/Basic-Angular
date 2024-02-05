@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PokemonService } from '../pokemon.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { formatPokemonId, formatName } from '../utils/functions';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'app-pokemon-detail',
@@ -26,8 +26,12 @@ export class PokemonDetailComponent implements OnInit {
   fetchPokemonData(): void {
     const pokemonRequests = [
       this.pokemonService.fetchPokemonById(this.id),
-      this.pokemonService.fetchPokemonById(this.id - 1),
-      this.pokemonService.fetchPokemonById(this.id + 1)
+      this.pokemonService.fetchPokemonById(this.id > 1 ? this.id - 1 : 1).pipe(
+        catchError(() => of(null))
+      ),
+      this.pokemonService.fetchPokemonById(this.id + 1).pipe(
+        catchError(() => of(null))
+      )
     ];
 
     forkJoin(pokemonRequests).subscribe(([data, prevData, nextData]) => {

@@ -19,8 +19,10 @@
             </div>
         </div>
         <div class="w-full h-full flex justify-content-evenly">
-            <p-button (click)="onClickDetail(prevPokemon.id)" label={{prevPokemon?.name}}></p-button>
-            <p-button (click)="onClickDetail(nextPokemon.id)" label={{nextPokemon?.name}}></p-button>
+            <p-button [disabled]="pokemon?.id === '0001'" (click)="onClickDetail(prevPokemon.id)"
+                label={{prevPokemon?.name}}></p-button>
+            <p-button *ngIf="nextPokemon?.id" (click)="onClickDetail(nextPokemon.id)"
+                label={{nextPokemon?.name}}></p-button>
         </div>
     </div>
 </div>
