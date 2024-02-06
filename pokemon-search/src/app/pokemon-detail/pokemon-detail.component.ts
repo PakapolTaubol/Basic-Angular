@@ -17,7 +17,7 @@ export class PokemonDetailComponent implements OnInit {
     private router: Router
   ) { }
 
-  pokemon: any;
+  currentPokemon: any;
   prevPokemon: any;
   nextPokemon: any;
   id: number = 0;
@@ -29,33 +29,29 @@ export class PokemonDetailComponent implements OnInit {
   );
 
   fetchPokemonData(id: number): Observable<any[]> {
-    const cachedPokemons = [this.pokemon, this.prevPokemon, this.nextPokemon];
-
+    const cachedPokemons = [this.prevPokemon, this.nextPokemon];
     const pokemonRequests = cachedPokemons.map((pokemon, index) => {
-      const offset = index - 1;
+      const offset = index;
       const pokemonId = id + offset;
 
       if (pokemon && pokemon.id === pokemonId) {
-        // ตรวจสอบ ID และใช้ Observable.of ส่งออกข้อมูลเก่า
         return of(pokemon);
       }
 
-      // fetch ข้อมูลโปเกม่อนใหม่
       return this.pokemonService.fetchPokemonById(pokemonId).pipe(
         tap(data => {
           if (offset === -1) {
             this.prevPokemon = this.formatPokemonData(data);
           } else if (offset === 0) {
-            this.pokemon = this.formatPokemonData(data);
+            this.currentPokemon = this.formatPokemonData(data);
           } else if (offset === 1) {
             this.nextPokemon = this.formatPokemonData(data);
           }
         }),
-        shareReplay(1) // แชร์ข้อมูล Observable เพื่อป้องกันการ fetch ซ้ำ
+        shareReplay(1)
       );
     });
 
-    // combineLatest รอจน Observable ทั้งหมดเสร็จสิ้น
     return forkJoin(pokemonRequests);
   }
 
