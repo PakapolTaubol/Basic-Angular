@@ -63,4 +63,8 @@ export class PokemonDetailComponent implements OnInit {
     this.router.navigate(['/detail'], { queryParams: { id: id } })
     this.fetchPokemonData(id)
   }
+
+  onBackButton(): void {
+    this.router.navigate([''])
+  }
 }

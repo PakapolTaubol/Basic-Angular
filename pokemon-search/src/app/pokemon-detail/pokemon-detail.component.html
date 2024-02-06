@@ -1,8 +1,12 @@
 <div class="w-full h-screen bg-bluegray-200 py-4 px-8">
+
     <div class="details border-bluegray-100">
-        <div class="text-center">
-            <span class="font-bold">{{ pokemon?.name}}</span>
-            <span class="text-bluegray-700"> #{{ pokemon?.id}}</span>
+        <div class="flex flex-row justify-content-between">
+            <p-button (click)="onBackButton()" label="Back"></p-button>
+            <div>
+                <span class="font-bold">{{ pokemon?.name}}</span>
+                <span class="text-bluegray-700"> #{{ pokemon?.id}}</span>
+            </div>
         </div>
         <div class="center">
             <img class="img-big" [src]="pokemon?.img">

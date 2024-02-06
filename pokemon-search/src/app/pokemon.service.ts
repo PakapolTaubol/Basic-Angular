@@ -21,12 +21,8 @@ export class PokemonService {
 
   constructor(private http: HttpClient) {
     this.createEffect(this.loadPokemonAction.pipe(switchMap(() => {
-      const pokemons = []
-      for (let i = 1; i <= 50; i++) {
-        const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-        pokemons.push(this.http.get(url))
-      }
-      return forkJoin(pokemons).pipe(
+      const pokemonRequests = Array.from({ length: 200 }, (_, i) => this.http.get(`https://pokeapi.co/api/v2/pokemon/${i + 1}`));
+      return forkJoin(pokemonRequests).pipe(
         catchError(err => {
           this.loadedPokemonErrorAction.next(err);
           return NEVER
@@ -48,12 +44,8 @@ export class PokemonService {
   }
 
   fetchPokemonData(): Observable<any> {
-    const pokemons = []
-    for (let i = 1; i <= 50; i++) {
-      const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-      pokemons.push(this.http.get(url))
-    }
-    return forkJoin(pokemons);
+    const pokemonRequests = Array.from({ length: 50 }, (_, i) => this.http.get(`https://pokeapi.co/api/v2/pokemon/${i + 1}`));
+    return forkJoin(pokemonRequests);
   }
 
   fetchPokemonById(id: number): Observable<any> {
