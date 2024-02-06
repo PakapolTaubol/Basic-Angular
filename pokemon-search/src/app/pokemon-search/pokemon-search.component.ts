@@ -33,12 +33,6 @@ export class PokemonSearchComponent implements OnInit {
   }
 
   fetchPokemon(): void {
-    // this.store.fetchPokemonData().subscribe((pokemonData) => {
-    //   this.pokemonList = pokemonData;
-    //   this.pokemonFiltered = this.pokemonList;
-    //   // console.log(this.pokemonFiltered);
-    // })
-    
     this.store.pokemons$.subscribe((pokemonData) => {
       this.pokemonList = pokemonData;
       this.pokemonFiltered = this.pokemonList;

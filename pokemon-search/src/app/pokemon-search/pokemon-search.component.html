@@ -1,4 +1,4 @@
-<div id="nav-bar" class="bg-white shadow-2 py-3">
+<div id="nav-bar" class="bg-indigo-700 text-white shadow-3 py-2">
     <div id="contenr-top">
         <div class="text-center">
             <p class="font-bold text-4xl m-0">PokeSearch</p>
@@ -12,11 +12,10 @@
                     <input pInputText [(ngModel)]="input" (keyup)="onSearch()" type="text"
                         placeholder="Search Pokemon...">
                 </span>
-                <p-button (click)="onSearch()" type="button" label="Search"></p-button>
             </div>
         </div>
     </div>
-    <div class="text-center text-sm text-bluegray-500 pt-2">
+    <div class="text-center text-sm pt-2">
         <span>{{pokemonFiltered.length}} Pokemons</span>
     </div>
 </div>

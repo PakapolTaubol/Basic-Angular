@@ -29,13 +29,6 @@ export class PokemonDetailComponent implements OnInit {
   );
 
   fetchPokemonData(id: number): Observable<any[]> {
-    // const existingData = [this.pokemon, this.prevPokemon, this.nextPokemon].find(data => data?.id === id);
-
-    // if (existingData) {
-    //   console.log('true');
-    //   return of([this.nextPokemon, this.pokemon, this.prevPokemon,]);
-    // }
-
     const pokemonRequests = [
       this.pokemonService.fetchPokemonById(id).pipe(
         tap(data => this.pokemon = this.formatPokemonData(data)),
