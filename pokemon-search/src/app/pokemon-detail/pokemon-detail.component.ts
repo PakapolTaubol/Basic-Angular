@@ -1,8 +1,8 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PokemonService } from '../pokemon.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { formatPokemonId, formatName } from '../utils/functions';
-import { Observable, catchError, forkJoin, of, shareReplay, switchMap, tap } from 'rxjs';
+import { Observable, forkJoin, of, shareReplay, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-pokemon-detail',
@@ -29,20 +29,33 @@ export class PokemonDetailComponent implements OnInit {
   );
 
   fetchPokemonData(id: number): Observable<any[]> {
-    const pokemonRequests = [
-      this.pokemonService.fetchPokemonById(id).pipe(
-        tap(data => this.pokemon = this.formatPokemonData(data)),
-        shareReplay(1)
-      ),
-      this.pokemonService.fetchPokemonById(id > 1 ? id - 1 : 1).pipe(
-        tap(data => this.prevPokemon = this.formatPokemonData(data)),
-        shareReplay(1)
-      ),
-      this.pokemonService.fetchPokemonById(id > 0 ? id + 1 : 1).pipe(
-        tap(data => this.nextPokemon = this.formatPokemonData(data)),
-        shareReplay(1)
-      )
-    ];
+    const cachedPokemons = [this.pokemon, this.prevPokemon, this.nextPokemon];
+
+    const pokemonRequests = cachedPokemons.map((pokemon, index) => {
+      const offset = index - 1;
+      const pokemonId = id + offset;
+
+      if (pokemon && pokemon.id === pokemonId) {
+        // ตรวจสอบ ID และใช้ Observable.of ส่งออกข้อมูลเก่า
+        return of(pokemon);
+      }
+
+      // fetch ข้อมูลโปเกม่อนใหม่
+      return this.pokemonService.fetchPokemonById(pokemonId).pipe(
+        tap(data => {
+          if (offset === -1) {
+            this.prevPokemon = this.formatPokemonData(data);
+          } else if (offset === 0) {
+            this.pokemon = this.formatPokemonData(data);
+          } else if (offset === 1) {
+            this.nextPokemon = this.formatPokemonData(data);
+          }
+        }),
+        shareReplay(1) // แชร์ข้อมูล Observable เพื่อป้องกันการ fetch ซ้ำ
+      );
+    });
+
+    // combineLatest รอจน Observable ทั้งหมดเสร็จสิ้น
     return forkJoin(pokemonRequests);
   }
 
@@ -62,7 +75,6 @@ export class PokemonDetailComponent implements OnInit {
 
   onClickNextPrev(id: number): void {
     this.router.navigate(['/detail'], { queryParams: { id: id } })
-    this.fetchPokemonData(id)
   }
 
   onBackButton(): void {
