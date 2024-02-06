@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, distinctUntilChanged, forkJoin, map, NEVER, Observable, shareReplay, Subject, Subscription, switchMap, tap } from "rxjs";
+import { BehaviorSubject, catchError, distinctUntilChanged, forkJoin, map, NEVER, Observable, of, shareReplay, Subject, Subscription, switchMap, tap } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
 export interface PokemonState {
   pokemons: any[];
+  loading: boolean;
+  error: any;
 }
 @Injectable({
   providedIn: 'root',
 })
 export class PokemonService {
   private state = new BehaviorSubject<PokemonState>({
-    pokemons: []
+    pokemons: [],
+    loading: false,
+    error: null,
   })
 
   private loadPokemonAction = new Subject<void>();
@@ -20,16 +24,24 @@ export class PokemonService {
   pokemons$ = this.createSelector(state => state.pokemons);
 
   constructor(private http: HttpClient) {
-    this.createEffect(this.loadPokemonAction.pipe(switchMap(() => {
-      const pokemonRequests = Array.from({ length: 200 }, (_, i) => this.http.get(`https://pokeapi.co/api/v2/pokemon/${i + 1}`));
-      return forkJoin(pokemonRequests).pipe(
-        catchError(err => {
-          this.loadedPokemonErrorAction.next(err);
-          return NEVER
-        }))
-    }), tap(response => {
-      this.loadedPokemonSuccessAction.next(response)
-    })))
+    this.createEffect(this.loadPokemonAction.pipe(
+      switchMap(() => {
+        this.state.next({ ...this.state.value, loading: true }); // แสดงสถานะ loading
+
+        return this.fetchPokemonData().pipe(
+          tap(response => {
+            this.loadedPokemonSuccessAction.next(response);
+          }),
+          catchError(err => {
+            this.loadedPokemonErrorAction.next(err);
+            return NEVER;
+          })
+        );
+      }),
+      tap(() => {
+        this.state.next({ ...this.state.value, loading: false }); // ซ่อนสถานะ loading
+      })
+    ));
 
     this.createEffect(this.loadedPokemonErrorAction.pipe(
       tap(err => {
@@ -44,7 +56,12 @@ export class PokemonService {
   }
 
   fetchPokemonData(): Observable<any> {
-    const pokemonRequests = Array.from({ length: 50 }, (_, i) => this.http.get(`https://pokeapi.co/api/v2/pokemon/${i + 1}`));
+    const cachedPokemons = this.state.value.pokemons;
+    if (cachedPokemons.length > 0) {
+      return of(cachedPokemons);
+    }
+
+    const pokemonRequests = Array.from({ length: 200 }, (_, i) => this.http.get(`https://pokeapi.co/api/v2/pokemon/${i + 1}`));
     return forkJoin(pokemonRequests);
   }
 
