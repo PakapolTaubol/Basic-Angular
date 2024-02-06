@@ -4,8 +4,6 @@ import { HttpClient } from "@angular/common/http";
 
 export interface PokemonState {
   pokemons: any[];
-  loading: boolean;
-  error: any;
 }
 @Injectable({
   providedIn: 'root',
@@ -13,8 +11,6 @@ export interface PokemonState {
 export class PokemonService {
   private state = new BehaviorSubject<PokemonState>({
     pokemons: [],
-    loading: false,
-    error: null,
   })
 
   private loadPokemonAction = new Subject<void>();
@@ -26,8 +22,6 @@ export class PokemonService {
   constructor(private http: HttpClient) {
     this.createEffect(this.loadPokemonAction.pipe(
       switchMap(() => {
-        this.state.next({ ...this.state.value, loading: true }); // แสดงสถานะ loading
-
         return this.fetchPokemonData().pipe(
           tap(response => {
             this.loadedPokemonSuccessAction.next(response);
@@ -38,9 +32,6 @@ export class PokemonService {
           })
         );
       }),
-      tap(() => {
-        this.state.next({ ...this.state.value, loading: false }); // ซ่อนสถานะ loading
-      })
     ));
 
     this.createEffect(this.loadedPokemonErrorAction.pipe(
