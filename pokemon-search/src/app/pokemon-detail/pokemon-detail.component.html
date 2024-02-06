@@ -25,7 +25,7 @@
         <div class="flex pt-1 text-lg font-semibold text-bluegray-600"
             [class]="pokemon?.id === 1 ? 'justify-content-end': 'justify-content-between'">
             <span *ngIf="pokemon?.id !== 1">
-                {{ prevPokemon?.name }} #{{ prevPokemon?.format_id }}
+                #{{ prevPokemon?.format_id }} {{ prevPokemon?.name }} 
             </span>
             <!-- <span *ngIf="pokemon?.id === 1"></span> -->
             <span>{{nextPokemon?.name}} #{{ nextPokemon?.format_id}}</span>
