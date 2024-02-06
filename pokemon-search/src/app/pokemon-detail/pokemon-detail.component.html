@@ -5,7 +5,7 @@
             <p-button (click)="onBackButton()" label="Back"></p-button>
             <div>
                 <span class="font-bold">{{ pokemon?.name}}</span>
-                <span class="text-bluegray-700"> #{{ pokemon?.id}}</span>
+                <span class="text-bluegray-700"> #{{ pokemon?.format_id}}</span>
             </div>
         </div>
         <div class="center">
@@ -22,11 +22,18 @@
                 <p>Hidden: <span>{{pokemon?.hidden_ability}}</span></p>
             </div>
         </div>
-        <div class="w-full h-full flex justify-content-evenly pt-6">
-            <p-button [disabled]="pokemon?.id === '0001'" (click)="onClickDetail(prevPokemon.id)"
-                label={{prevPokemon?.name}}></p-button>
-            <p-button *ngIf="nextPokemon?.id" (click)="onClickDetail(nextPokemon.id)"
-                label={{nextPokemon?.name}}></p-button>
+        <div class="flex pt-1 text-lg font-semibold text-bluegray-600"
+            [class]="pokemon?.id === 1 ? 'justify-content-end': 'justify-content-between'">
+            <span *ngIf="pokemon?.id !== 1">
+                {{ prevPokemon?.name }} #{{ prevPokemon?.format_id }}
+            </span>
+            <!-- <span *ngIf="pokemon?.id === 1"></span> -->
+            <span>{{nextPokemon?.name}} #{{ nextPokemon?.format_id}}</span>
+        </div>
+        <div class="w-full h-full flex justify-content-between pt-2">
+            <p-button severity="secondary" [disabled]="pokemon?.id === 1" (click)="onClickNextPrev(pokemon.id - 1)"
+                label="Previous"></p-button>
+            <p-button severity="secondary" (click)="onClickNextPrev(pokemon.id + 1)" label="Next"></p-button>
         </div>
     </div>
 </div>
