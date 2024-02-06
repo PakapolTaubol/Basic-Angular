@@ -1,12 +1,52 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, from, map, Observable, range } from "rxjs";
+import { BehaviorSubject, catchError, distinctUntilChanged, forkJoin, map, NEVER, Observable, shareReplay, Subject, Subscription, switchMap, tap } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
+export interface PokemonState {
+  pokemons: any[];
+}
 @Injectable({
   providedIn: 'root',
 })
 export class PokemonService {
-  constructor(private http: HttpClient) { }
+  private state = new BehaviorSubject<PokemonState>({
+    pokemons: []
+  })
+
+  private loadPokemonAction = new Subject<void>();
+  private loadedPokemonSuccessAction = new Subject<any[]>();
+  private loadedPokemonErrorAction = new Subject<any>();
+
+  pokemons$ = this.createSelector(state => state.pokemons);
+
+  constructor(private http: HttpClient) {
+    this.createEffect(this.loadPokemonAction.pipe(switchMap(() => {
+      const pokemons = []
+      for (let i = 1; i <= 50; i++) {
+        const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+        pokemons.push(this.http.get(url))
+      }
+      return forkJoin(pokemons).pipe(
+        catchError(err => {
+          this.loadedPokemonErrorAction.next(err);
+          return NEVER
+        }))
+    }), tap(response => {
+      this.loadedPokemonSuccessAction.next(response)
+    })))
+
+    this.createEffect(this.loadedPokemonErrorAction.pipe(
+      tap(err => {
+        console.error(err);
+      })
+    ))
+
+    this.createReducer(this.loadedPokemonSuccessAction, (state, pokemons) => {
+      state.pokemons = pokemons
+      return state;
+    })
+  }
+
   fetchPokemonData(): Observable<any> {
     const pokemons = []
     for (let i = 1; i <= 50; i++) {
@@ -15,8 +55,35 @@ export class PokemonService {
     }
     return forkJoin(pokemons);
   }
-  
+
   fetchPokemonById(id: number): Observable<any> {
     return this.http.get<any>(`https://pokeapi.co/api/v2/pokemon/${id}`);
+  }
+
+  loadPokemon() {
+    this.loadPokemonAction.next();
+  }
+
+  private createSelector<T>(selector: (state: PokemonState) => T): Observable<T> {
+    return this.state.pipe(
+      map(selector),
+      distinctUntilChanged(),
+      shareReplay(1)
+    )
+  }
+
+  private createReducer<T>(
+    action$: Observable<T>,
+    accumulator: (state: PokemonState, action: T) => PokemonState
+  ) {
+    action$.subscribe((action) => {
+      const state = { ...this.state.value };
+      const newState = accumulator(state, action);
+      this.state.next(newState);
+    })
+  }
+
+  private createEffect<T>(effect$: Observable<T>): Subscription {
+    return effect$.subscribe();
   }
 }

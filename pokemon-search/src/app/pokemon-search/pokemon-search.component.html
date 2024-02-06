@@ -16,5 +16,6 @@
             </div>
         </div>
     </div>
+    {{ getStore().pokemons$ | async}}
 </div>
 <app-pokemon-list [pokemonFiltered]="pokemonFiltered"></app-pokemon-list>

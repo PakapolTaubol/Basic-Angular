@@ -11,30 +11,39 @@ export class PokemonSearchComponent implements OnInit {
   pokemonFiltered: any[] = [];
   input: string = '';
 
-  constructor(private pokemonService: PokemonService) { }
+  constructor(private store: PokemonService) {
+    this.store = store;
+  }
 
-  onSearch(): void {
-    this.filterPokemon(this.input);
+  getStore() {
+    return this.store
   }
 
   filterPokemon(text: string): void {
-    const pList = this.pokemonList;
+    const pokeList = this.pokemonList;
     if (text) {
       const lowercaseText = text.toLowerCase();
-      this.pokemonFiltered = pList.filter(mon =>
-        mon.name
+      this.pokemonFiltered = pokeList.filter(monster =>
+        monster.name
           .toLowerCase()
           .includes(lowercaseText))
     } else {
-      this.pokemonFiltered = pList
+      this.pokemonFiltered = pokeList
     }
   }
 
   fetchPokemon(): void {
-    this.pokemonService.fetchPokemonData().subscribe((pokemonData) => {
+    this.store.fetchPokemonData().subscribe((pokemonData) => {
       this.pokemonList = pokemonData;
       this.pokemonFiltered = this.pokemonList;
-    })  
+      // console.log(this.pokemonFiltered);
+    })
+    this.store.loadPokemon()
+    console.log(this.store.pokemons$);
+  }
+
+  onSearch(): void {
+    this.filterPokemon(this.input);
   }
 
   ngOnInit(): void {
