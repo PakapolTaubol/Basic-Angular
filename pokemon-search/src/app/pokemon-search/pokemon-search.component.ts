@@ -38,7 +38,7 @@ export class PokemonSearchComponent implements OnInit {
     //   this.pokemonFiltered = this.pokemonList;
     //   // console.log(this.pokemonFiltered);
     // })
-    this.store.loadPokemon()
+    
     this.store.pokemons$.subscribe((pokemonData) => {
       this.pokemonList = pokemonData;
       this.pokemonFiltered = this.pokemonList;
@@ -50,6 +50,7 @@ export class PokemonSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.loadPokemon();
     this.fetchPokemon();
   }
 }

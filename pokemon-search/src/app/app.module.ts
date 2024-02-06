@@ -12,6 +12,7 @@ import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
 import { PokemonSearchComponent } from './pokemon-search/pokemon-search.component';
 import { PokemonDetailComponent } from './pokemon-detail/pokemon-detail.component';
 import { AppRoutingModule } from './app-routing.module';
+import { LoadingSpinComponent } from './shared/loading-spin/loading-spin.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
     PokemonListComponent,
     PokemonSearchComponent,
     PokemonDetailComponent,
+    LoadingSpinComponent,
   ],
   imports: [
     CommonModule,
