@@ -29,9 +29,9 @@ export class PokemonDetailComponent implements OnInit {
   );
 
   fetchPokemonData(id: number): Observable<any[]> {
-    const cachedPokemons = [this.prevPokemon, this.nextPokemon];
+    const cachedPokemons = [this.prevPokemon, this.currentPokemon, this.nextPokemon];
     const pokemonRequests = cachedPokemons.map((pokemon, index) => {
-      const offset = index;
+      const offset = index - 1;
       const pokemonId = id + offset;
 
       if (pokemon && pokemon.id === pokemonId) {
