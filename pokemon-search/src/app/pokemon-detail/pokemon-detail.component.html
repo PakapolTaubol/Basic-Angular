@@ -1,28 +1,38 @@
 <div class="w-full h-screen bg-bluegray-200 py-4 px-8">
+
     <div class="details border-bluegray-100">
-        <div class="text-center">
-            <span class="font-bold">{{ pokemon?.name}}</span>
-            <span class="text-bluegray-700"> #{{ pokemon?.id}}</span>
+        <div class="flex flex-row justify-content-between">
+            <p-button (click)="onBackButton()" label="Back"></p-button>
+            <div>
+                <span class="font-bold">{{ currentPokemon?.name}}</span>
+                <span class="text-bluegray-700"> #{{ currentPokemon?.format_id}}</span>
+            </div>
         </div>
         <div class="center">
-            <img class="img-big" [src]="pokemon?.img">
+            <img class="img-big" [src]="currentPokemon?.img">
         </div>
         <div class="w-full h-full flex flex-row justify-content-evenly  flex-wrap">
             <div class="flex flex-column">
-                <p>Type: <span>{{pokemon?.types}}</span></p>
-                <p>Weight: <span>{{pokemon?.weight}}</span></p>
-                <p>Base EXP: <span>{{pokemon?.base_experience}}</span></p>
+                <p>Type: <span>{{currentPokemon?.types}}</span></p>
+                <p>Weight: <span>{{currentPokemon?.weight}}</span></p>
+                <p>Base EXP: <span>{{currentPokemon?.base_experience}}</span></p>
             </div>
             <div class="flex flex-column">
-                <p>Ability: <span>{{pokemon?.ability}}</span></p>
-                <p>Hidden: <span>{{pokemon?.hidden_ability}}</span></p>
+                <p>Ability: <span>{{currentPokemon?.ability}}</span></p>
+                <p>Hidden: <span>{{currentPokemon?.hidden_ability}}</span></p>
             </div>
         </div>
-        <div class="w-full h-full flex justify-content-evenly pt-6">
-            <p-button [disabled]="pokemon?.id === '0001'" (click)="onClickDetail(prevPokemon.id)"
-                label={{prevPokemon?.name}}></p-button>
-            <p-button *ngIf="nextPokemon?.id" (click)="onClickDetail(nextPokemon.id)"
-                label={{nextPokemon?.name}}></p-button>
+        <div class="flex pt-1 text-lg font-semibold text-bluegray-600"
+            [class]="currentPokemon?.id === 1 ? 'justify-content-end': 'justify-content-between'">
+            <span *ngIf="currentPokemon?.id !== 1">
+                #{{ prevPokemon?.format_id }} {{ prevPokemon?.name }} 
+            </span>
+            <span>{{nextPokemon?.name}} #{{ nextPokemon?.format_id}}</span>
+        </div>
+        <div class="w-full h-full flex justify-content-between pt-2">
+            <p-button severity="secondary" [disabled]="currentPokemon?.id === 1" (click)="onClickNextPrev(currentPokemon.id - 1)"
+                label="Previous"></p-button>
+            <p-button severity="secondary" (click)="onClickNextPrev(currentPokemon.id + 1)" label="Next"></p-button>
         </div>
     </div>
 </div>

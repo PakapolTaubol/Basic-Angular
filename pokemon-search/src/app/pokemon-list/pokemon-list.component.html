@@ -1,4 +1,4 @@
-<div id="content-center" class="pt-4 flex justify-content-center">
+<div id="content-center" *ngIf="pokemonFiltered" class="pt-4 flex justify-content-center">
     <div id="pokemon-list" class="grid gap-3 w-11">
         <div class="col-2 border-1 border-round border-bluegray-100 p-0 h-16rem w-16rem shadow-2 hover:bg-blue-50"
             *ngFor="let pokemon of pokemonFiltered;">
@@ -23,3 +23,4 @@
         </div>
     </div>
 </div>
+<app-loading-spin *ngIf="pokemonFiltered.length == 0"></app-loading-spin>
