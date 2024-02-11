@@ -22,13 +22,13 @@
                 <p>Hidden: <span>{{currentPokemon?.hidden_ability}}</span></p>
             </div>
         </div>
-        <div class="flex pt-1 text-lg font-semibold text-bluegray-600"
+        <!-- <div class="flex pt-1 text-lg font-semibold text-bluegray-600"
             [class]="currentPokemon?.id === 1 ? 'justify-content-end': 'justify-content-between'">
             <span *ngIf="currentPokemon?.id !== 1">
                 #{{ prevPokemon?.format_id }} {{ prevPokemon?.name }} 
             </span>
             <span>{{nextPokemon?.name}} #{{ nextPokemon?.format_id}}</span>
-        </div>
+        </div> -->
         <div class="w-full h-full flex justify-content-between pt-2">
             <p-button severity="secondary" [disabled]="currentPokemon?.id === 1" (click)="onClickNextPrev(currentPokemon.id - 1)"
                 label="Previous"></p-button>

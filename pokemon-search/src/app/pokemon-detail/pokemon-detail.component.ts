@@ -29,28 +29,33 @@ export class PokemonDetailComponent implements OnInit {
   );
 
   fetchPokemonData(id: number): Observable<any[]> {
-    const cachedPokemons = [this.prevPokemon, this.currentPokemon, this.nextPokemon];
-    const pokemonRequests = cachedPokemons.map((pokemon, index) => {
-      const offset = index - 1;
-      const pokemonId = id + offset;
+    // const cachedPokemons = [this.prevPokemon, this.currentPokemon, this.nextPokemon];
+    // const pokemonRequests = cachedPokemons.map((pokemon, index) => {
+    //   const offset = index - 1;
+    //   const pokemonId = id + offset;
 
-      if (pokemon && pokemon.id === pokemonId) {
-        return of(pokemon);
-      }
+    //   if (pokemon && pokemon.id === pokemonId) {
+    //     return of(pokemon);
+    //   }
 
-      return this.pokemonService.fetchPokemonById(pokemonId).pipe(
-        tap(data => {
-          if (offset === -1) {
-            this.prevPokemon = this.formatPokemonData(data);
-          } else if (offset === 0) {
-            this.currentPokemon = this.formatPokemonData(data);
-          } else if (offset === 1) {
-            this.nextPokemon = this.formatPokemonData(data);
-          }
-        }),
-        shareReplay(1)
-      );
-    });
+    //   return this.pokemonService.fetchPokemonById(pokemonId).pipe(
+    //     tap(data => {
+    //       if (offset === -1) {
+    //         this.prevPokemon = this.formatPokemonData(data);
+    //       } else if (offset === 0) {
+    //         this.currentPokemon = this.formatPokemonData(data);
+    //       } else if (offset === 1) {
+    //         this.nextPokemon = this.formatPokemonData(data);
+    //       }
+    //     }),
+    //     shareReplay(1)
+    //   );
+    // });
+    const pokemonRequests = this.pokemonService.fetchPokemonById(id).pipe(
+      tap(data => {
+        this.currentPokemon = this.formatPokemonData(data);
+      })
+    )
 
     return forkJoin(pokemonRequests);
   }
