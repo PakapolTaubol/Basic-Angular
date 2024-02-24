@@ -1,0 +1,25 @@
+<div>
+    <div class="form-register">
+        <form [formGroup]="applyForm" action="">
+            <h2>Register Page!</h2>
+            <label for="email">Email </label>
+            <span class="text-red-500">*</span>
+            <input id="email" type="text" fromControlName="email">
+
+            <label for="username">User name </label>
+            <span class="text-red-500">*</span>
+            <input id="username" type="text" fromControlName="userName">
+
+            <label for="password">Password </label>
+            <span class="text-red-500">*</span>
+            <input id="password" type="text" fromControlName="password">
+
+            <label for="address">Address </label>
+            <span class="text-red-500">*</span>
+            <input id="address" type="text" fromControlName="address">
+
+            <!-- <button type="submit" class="primary">Apply Now</button> -->
+            <p-button icon="pi pi-iconName" label="submit"></p-button>
+        </form>
+    </div>
+</div>
